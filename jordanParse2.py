@@ -38,7 +38,8 @@ def parse(input_file, circuit):
         df.index = pd.to_datetime(df.index, dayfirst=False)
     else:
         df.index = pd.to_datetime(df.index, dayfirst=True)
-    
+    a = df.axes
+    b = a[0]
     
     return df
 
@@ -304,13 +305,13 @@ def graph(circuit, transformed):
     numDaysInterval = 4
     for i in range (0, len(xValues), numDaysInterval * margin):
         x.append(xValues[i])
-    for i in range (0, len(xValues)):
-        #xValues[i] /= margin
-        xValues[i] = int(xValues[i])
-    for i in range(0, len(xValues), numDaysInterval):
-        xTicks.append(xValues[i])
 
-    plt.xticks(x,xTicks)
+    axes = transformed.axes
+    xAxis = axes[0]
+    summarizedXAxis = []
+    for i in range (0, len(xAxis),numDaysInterval):
+        summarizedXAxis.append(xAxis[i])
+    plt.xticks(x,summarizedXAxis, rotation = "vertical")
     plt.show()
 
 
