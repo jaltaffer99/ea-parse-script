@@ -38,7 +38,6 @@ def parse(input_file, circuit):
         df.index = pd.to_datetime(df.index, dayfirst=False)
     else:
         df.index = pd.to_datetime(df.index, dayfirst=True)
-
     
     
     return df
@@ -221,9 +220,13 @@ def graph(circuit, transformed):
         margin = 7
     xValues = []
     count = 0
-    for i in transformed["Main (kWh)"].tolist():
+    circuit += " "
+    end = circuit.index(" ")
+    guideCircuit = circuit[0:end]
+    for i in transformed[guideCircuit + " (kWh)"].tolist():
         xValues.append((count * margin))
-        count+=1
+        count += 1
+
     xSize = len(xValues)
     if circuit.find('Gas') != -1:
         gasValues = transformed["Gas (kWh)"].tolist()
